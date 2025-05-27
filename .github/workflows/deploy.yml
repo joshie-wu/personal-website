@@ -10,27 +10,34 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Install, build, and upload your site
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Install, build, and upload
         uses: withastro/action@v2
         with:
-          path: . # The root location of your Astro project inside the repository
+          path: .
           node-version: 18
           package-manager: npm@latest
 
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
