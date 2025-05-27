@@ -1,11 +1,215 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Welcome">
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Hi, I'm <span class="highlight">Josh</span> 👋</h1>
+      <p class="lead">I like turning messy data into compelling, fun stories that spark understanding!</p>
+    </div>
+  </section>
+
+  <section class="about-preview">
+    <h3>About Me</h3>
+    <p>
+        I graduated in 2024 with a BA in Mathematics, and I am now a current Masters student at Columbia University studying statistics and economics. My passion is analyzing public policy and behavioral data to create insights in engaging and insightful ways.
+    </p>
+    <p>
+      To find out more about what I am interested in, I have showcased several projects that I have worked on before.
+    </p>
+  </section>
+
+  <section class="recent-projects">
+    <h3>Featured Projects</h3>
+    <div class="project-grid">
+      <div class="project-card" onclick="window.location.href='/projects/tariffs'" style="cursor: pointer;">
+        <h4>US Tariffs Analysis</h4>
+        <p>An examination of the impact of 2018 tariffs in the 2025 economy. Interactive presentation with data visualizations.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">Astro</span>
+          <span class="tech-tag">HTML/CSS</span>
+          <span class="tech-tag">Data Visualization</span>
+        </div>
+      </div>
+    </div>
+    </div>
+      <div class="project-card">
+        <h4>Social Media Dashboard</h4>
+        <p>Analytics dashboard for social media managers to track performance across multiple platforms with beautiful data visualizations.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">D3.js</span>
+          <span class="tech-tag">Node.js</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <h4>AI Content Generator</h4>
+        <p>Tool that leverages AI to generate marketing content and blog posts with customizable tone and style options.</p>
+        <div class="tech-stack">
+          <span class="tech-tag">Next.js</span>
+          <span class="tech-tag">OpenAI API</span>
+          <span class="tech-tag">PostgreSQL</span>
+        </div>
+      </div>
+    </div>
+    <a href="/projects" class="button">View All Projects →</a>
+  </section>
+
+  <section class="recent-posts">
+    <h3>Latest Blog Posts</h3>
+    <article class="blog-preview">
+      <h4>Understanding Server-Side Rendering vs Static Generation</h4>
+      <time>March 15, 2024</time>
+      <p>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+      </p>
+      <a href="/posts/ssr-vs-ssg">Read More →</a>
+    </article>
+    
+    <article class="blog-preview">
+      <h4>The Future of Web Development: What to Expect in 2024</h4>
+      <time>March 10, 2024</time>
+      <p>
+        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+      </p>
+      <a href="/posts/web-dev-2024">Read More →</a>
+    </article>
+    <a href="/posts" class="button">View All Posts →</a>
+  </section>
+
+  <style>
+    .hero {
+      text-align: center;
+      margin: 0 0 60px;
+      padding: 80px 40px;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #222;
+      font-weight: 700;
+    }
+
+    .highlight {
+      color: #e74c3c;
+      display: inline-block;
+      position: relative;
+    }
+
+    .lead {
+      font-size: 1.5rem;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      color: #333;
+      position: relative;
+    }
+
+    h3::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: #0066cc;
+      margin-top: 5px;
+    }
+
+    .button {
+      display: inline-block;
+      background: #0066cc;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background: #0052a3;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .project-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 25px;
+      background: #fff;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .project-card h4 {
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    .tech-stack {
+      margin-top: 15px;
+    }
+
+    .tech-tag {
+      display: inline-block;
+      background: #e9ecef;
+      color: #333;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 0.9rem;
+      margin-right: 8px;
+      margin-bottom: 5px;
+    }
+
+    .blog-preview {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+    }
+
+    .blog-preview h4 {
+      color: #222;
+      margin-bottom: 5px;
+    }
+
+    .blog-preview time {
+      color: #666;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .blog-preview a {
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</BaseLayout>

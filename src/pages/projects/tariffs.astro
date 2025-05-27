@@ -1,0 +1,491 @@
+---
+export interface Props {
+  mainTitle?: string;
+  subtitle?: string;
+}
+
+const { 
+  mainTitle = "US Tariffs", 
+  subtitle = "Examining the Impact of 2018 Tariffs in the 2025 Economy" 
+} = Astro.props;
+
+// Timeline data
+const historicalTimeline = [
+  { year: "1971 Nixon", event: "10% surcharge on imports" },
+  { year: "1977 Carter", event: "Shoe import quotas" },
+  { year: "1981 Reagan", event: "Japanese auto export restraints" },
+  { year: "2002 G.W. Bush", event: "Steel tariffs" },
+  { year: "2009 Obama", event: "35% tariffs on Chinese tires" },
+  { year: "2018 Trump", event: "US-China trade war" }
+];
+
+const updateTimeline2025 = [
+  { date: "February 1st, 2025", event: "A 10% tariff on China was placed via a presidential action due to the International Emergency Economic Powers Act (IEEPA)" },
+  { date: "March 4th", event: "Additional 10% tariffs on China are announced." },
+  { date: "April 2nd", event: "President Trump announces a universal reciprocal tariff of 10% via executive order as well as increases for specific countries." },
+  { date: "April 8th", event: "In response to China's 34% tariffs on US imports, President Trump increased tariff rates by 84%, which makes the total tariff rate 104%." },
+  { date: "April 9th", event: "Tariffs are further increased from 84% to 125%, making the total tariff rate on Chinese imports 145%." }
+];
+
+// 2018 Deadweight Loss Data
+const deadweightData = [
+  { month: "January", deadweight: 0, revenue: 0, total: 0 },
+  { month: "February", deadweight: 0.1, revenue: 0.1, total: 0.2 },
+  { month: "March", deadweight: 0.1, revenue: 0.1, total: 0.2 },
+  { month: "April", deadweight: 0.3, revenue: 0.4, total: 0.7 },
+  { month: "May", deadweight: 0.2, revenue: 0.4, total: 0.6 },
+  { month: "June", deadweight: 0.4, revenue: 0.7, total: 1.2 },
+  { month: "July", deadweight: 0.9, revenue: 1.4, total: 2.4 },
+  { month: "August", deadweight: 0.9, revenue: 1.4, total: 2.3 },
+  { month: "September", deadweight: 1.0, revenue: 1.6, total: 2.6 },
+  { month: "October", deadweight: 1.5, revenue: 3.2, total: 4.6 },
+  { month: "November", deadweight: 1.4, revenue: 3.0, total: 4.4 },
+  { month: "December", deadweight: 1.4, revenue: 3.2, total: 4.7 },
+  { month: "Total", deadweight: 8.2, revenue: 15.6, total: 23.8 }
+];
+---
+
+<header class="header-container">
+  <div class="header-content">
+    <h1 class="main-title">{mainTitle}</h1>
+    <h2 class="subtitle">{subtitle}</h2>
+  </div>
+  <div class="bottom-bar"></div>
+</header>
+
+<main>
+  <!-- Tariffs Explained Section -->
+  <section class="content-section">
+    <h2 class="section-title">Tariffs Explained</h2>
+    <ul class="bullet-list">
+      <li>A tariff is government-imposed <strong>taxes on imported goods</strong>, designed to alter relative prices in favor of domestic production</li>
+      <li>Rationale for tariff measures are three-fold:
+        <ul class="sub-bullet">
+          <li><strong>Protection:</strong> Shield domestic industries from foreign competition (notably steel, automobiles, textiles)</li>
+          <li><strong>Revenue:</strong> Main federal revenue source before the income tax (19th-century US)</li>
+          <li><strong>Negotiation Leverage:</strong> Used to pressure trading partners into reciprocal trade concessions</li>
+        </ul>
+      </li>
+      <li>Tariffs distort efficient market allocation
+        <ul class="sub-bullet">
+          <li>Tariffs introduce <strong>price wedges</strong>, shrinking imports and reallocating demand</li>
+          <li><strong>Efficiency loss</strong> arises when consumer surplus losses > tariff revenue gains — particularly when export supply is elastic</li>
+        </ul>
+      </li>
+      <li>Highly elastic supply = larger burden on domestic consumers, smaller strategic gains, as seen in Trump's 2018 tariffs (Amiti, Redding, and Weinstein)</li>
+    </ul>
+  </section>
+
+  <!-- Historical Background Section -->
+  <section class="content-section">
+    <h2 class="section-title">Historical Background on US Tariffs</h2>
+    <ul class="bullet-list">
+      <li>Presidents often impose tariffs <strong>early</strong> in their terms</li>
+    </ul>
+    
+    <div class="timeline-container">
+      {historicalTimeline.map((item, index) => (
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <h3>{item.year}</h3>
+          <p>{item.event}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>Key exception:</strong> George H.W. Bush and Bill Clinton who signed NAFTA</p>
+    </div>
+
+    <ul class="bullet-list">
+      <li>Tariffs are not new in US policy but have shifted purposes
+        <ul class="sub-bullet">
+          <li>From <strong>revenue generation</strong> → <strong>protectionism</strong> → <strong>bargaining tool</strong></li>
+        </ul>
+      </li>
+      <li>Historically, unilateral US tariffs often provoked complaints at the WTO and retaliatory measures from trading partners</li>
+    </ul>
+  </section>
+
+  <!-- Deadweight Loss Section -->
+  <section class="content-section">
+    <h2 class="section-title">Deadweight Loss & Welfare Effects</h2>
+    <div class="chart-container">
+      <div class="chart-title">Impact of a Tariff on Prices</div>
+      <p>The x-axis represents the quantity of home imports (m) while the y-axis represents foreign export prices (p).</p>
+      <ul class="bullet-list">
+        <li>Region B + D represents deadweight loss</li>
+        <li>Region A + C represents tariff revenue</li>
+      </ul>
+    </div>
+
+    <h3>Deadweight Welfare Loss and Tariff Revenue (2018)</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Month (2018)</th>
+          <th>Deadweight loss (1)</th>
+          <th>Tariff revenue (2)</th>
+          <th>Total cost to importers (3)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {deadweightData.map((row) => (
+          <tr class={row.month === "Total" ? "total-row" : ""}>
+            <td>{row.month === "Total" ? <strong>{row.month}</strong> : row.month}</td>
+            <td>{row.month === "Total" ? <strong>{row.deadweight}</strong> : row.deadweight}</td>
+            <td>{row.month === "Total" ? <strong>{row.revenue}</strong> : row.revenue}</td>
+            <td>{row.month === "Total" ? <strong>{row.total}</strong> : row.total}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <div class="highlight-box">
+      <p>In 2018, the price received by foreign exporters were not impacted by the tariffs. Thus, the revenue generated by tariffs is a <strong>"pure transfer from domestic consumers to the government."</strong></p>
+    </div>
+  </section>
+
+  <!-- Case Studies Section -->
+  <section class="content-section">
+    <h2 class="section-title">Understanding Tariff Incidence: The Case of Washing Machines</h2>
+    
+    <h3>Why washing machines?</h3>
+    <ul class="bullet-list">
+      <li>Among the first major trade tariffs of the 2016 Trump Admin → longer timeline of data</li>
+      <li>Clear complements and concentrated set of firms → simple to analyze</li>
+    </ul>
+
+    <h3>Study compares pre-Trump anti-dumping tariffs to Trump 2018 safeguarding tariffs</h3>
+
+    <div class="chart-container">
+      <h4>Production relocation</h4>
+      <ul class="bullet-list">
+        <li><strong>Anti-dumping:</strong> Production shifted easily from Korea → China → Vietnam/Thailand</li>
+        <li><strong>Trump 2018:</strong> Production relocation was harder because most countries had tariffs, LG and Samsung opened plants in the U.S. (cost per job created: $817,000)</li>
+      </ul>
+    </div>
+
+    <div class="chart-container">
+      <h4>Consumer prices</h4>
+      <ul class="bullet-list">
+        <li><strong>Anti-dumping:</strong> No major change in consumer prices</li>
+        <li><strong>Trump 2018:</strong> Washer prices rose 12% on average, as did dryers even though they were not subject to tariffs (shows effect of tariffs on complementary goods)</li>
+      </ul>
+    </div>
+
+    <div class="chart-container">
+      <h4>Consumer burden</h4>
+      <ul class="bullet-list">
+        <li><strong>Anti-dumping:</strong> Supply routes adjusted smoothly → firms did not have to offload burden onto consumers</li>
+        <li><strong>Trump 2018:</strong> $1.5 B monthly consumer cost, the tariff revenue generated was only $82 M per year → high burden on consumers relative to the small fiscal benefit</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2025 Update Section -->
+  <section class="content-section">
+    <h2 class="section-title">2025 Update (Up until April 12th)</h2>
+    
+    <div class="timeline-container">
+      {updateTimeline2025.map((item, index) => (
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <h3>{item.date}</h3>
+          <p>{item.event}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="chart-container">
+      <h3>Percentage Over Time of US Tariffs on China</h3>
+      <p>The tariffs have progressively increased from 20.8% in January 2025 to 145% by April 9th, 2025.</p>
+    </div>
+  </section>
+
+  <!-- Public Response Section -->
+  <section class="content-section">
+    <h2 class="section-title">How are people responding to the tariffs?</h2>
+    
+    <div class="chart-container">
+      <h3>Imports from China - US $ (Billions)</h3>
+      <p>Imports decreased significantly from $41.6B in January 2025 to $31.6B in February 2025.</p>
+    </div>
+
+    <div class="highlight-box">
+      <h3>TruthSocial Post on April 27th, 2025</h3>
+      <p><strong>Donald J. Trump @realDonaldTrump · 1d</strong></p>
+      <p>"When Tariffs cut in, many people's Income Taxes will be substantially reduced, maybe even completely eliminated. Focus will be on people making less than $200,000 a year. Also, massive numbers of jobs are already being created, with new plants and factories currently being built or planned. It will be a BONANZA FOR AMERICA!!! THE EXTERNAL REVENUE SERVICE IS HAPPENING!!!"</p>
+    </div>
+  </section>
+
+  <!-- Revenue Analysis Section -->
+  <section class="content-section">
+    <h2 class="section-title">A Closer Look at Revenues</h2>
+    
+    <div class="revenue-grid">
+      <div class="revenue-card">
+        <h3>$3.3<br>Trillion</h3>
+        <p>Revenues received by the federal government in 2018</p>
+      </div>
+      <div class="revenue-card">
+        <h3>$1.7<br>Trillion</h3>
+        <p>Receipts from individual income taxes, the largest source of revenues, in 2018</p>
+      </div>
+      <div class="revenue-card">
+        <h3>17.1%</h3>
+        <p>Average revenues as a percentage of GDP between 1998 and 2017</p>
+      </div>
+      <div class="revenue-card">
+        <h3>16.5%</h3>
+        <p>Revenues as a percentage of GDP in 2018</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>Key Insight:</strong> While tariff revenue increased from $0 to $15.6 billion in 2018, this represents less than 0.5% of total federal revenues. Individual income taxes at $1.7 trillion remain the largest source of federal funding, making up more than 50% of total revenues.</p>
+    </div>
+  </section>
+</main>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .header-container {
+    background-color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 2rem;
+  }
+
+  .header-content {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .main-title {
+    font-size: 6rem;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 2rem;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .subtitle {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #333;
+    margin-bottom: 4rem;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #c5d5e0;
+  }
+
+  .content-section {
+    background-color: white;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 4rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    color: #8B7355;
+    margin-bottom: 2rem;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .bullet-list {
+    margin-left: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .bullet-list li {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .sub-bullet {
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .chart-container {
+    margin: 3rem 0;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .chart-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+  }
+
+  .data-table th, .data-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+
+  .data-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+
+  .total-row {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+
+  .highlight-box {
+    background-color: #f0f7ff;
+    border-left: 4px solid #0066cc;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .timeline-container {
+    position: relative;
+    padding: 2rem 0;
+    margin: 3rem 0;
+  }
+
+  .timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #c5d5e0;
+  }
+
+  .timeline-item {
+    position: relative;
+    width: 45%;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+  }
+
+  .timeline-item:nth-child(odd) {
+    left: 0;
+  }
+
+  .timeline-item:nth-child(even) {
+    left: 55%;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #0066cc;
+    border-radius: 50%;
+    top: 2rem;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-dot {
+    right: -60px;
+  }
+
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: -60px;
+  }
+
+  .revenue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .revenue-card {
+    background: #f5f5f5;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .revenue-card h3 {
+    color: #4CAF50;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .main-title {
+      font-size: 4rem;
+    }
+    
+    .subtitle {
+      font-size: 1.8rem;
+    }
+    
+    .content-section {
+      padding: 2rem;
+    }
+
+    .timeline-container::before {
+      left: 20px;
+    }
+
+    .timeline-item {
+      width: calc(100% - 40px);
+      left: 40px !important;
+    }
+
+    .timeline-dot {
+      left: -30px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .main-title {
+      font-size: 3rem;
+    }
+    
+    .subtitle {
+      font-size: 1.5rem;
+    }
+    
+    .header-container {
+      padding: 1rem;
+    }
+
+    .content-section {
+      padding: 1rem;
+    }
+  }
+</style>
